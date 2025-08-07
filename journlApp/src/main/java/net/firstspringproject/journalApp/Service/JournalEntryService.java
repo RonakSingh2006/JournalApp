@@ -26,8 +26,8 @@ public class JournalEntryService {
         return journalEntryRepository.findAll();
     }
 
-    public JournalEntry getById(ObjectId id){
-        return journalEntryRepository.findById(id).orElse(null);
+    public Optional<JournalEntry> getById(ObjectId id){
+        return journalEntryRepository.findById(id);
     }
 
     public void delete(ObjectId id){
