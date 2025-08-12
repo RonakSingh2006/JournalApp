@@ -34,10 +34,10 @@ public class JournalEntryService {
             JournalEntry saved = journalEntryRepository.save(journalEntry);
 
             user.getJournalEntries().add(saved);
-            userService.saveEntry(user);
+            userService.saveUser(user);
         }
         catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.toString());
             throw new RuntimeException("Exception occured white saving journal Entry");
         }
     }
@@ -58,10 +58,20 @@ public class JournalEntryService {
 
     @Transactional
     public void delete(ObjectId id, String username){
-        User user = userService.findByUserName(username);
-        user.getJournalEntries().removeIf(x->x.getId() == id);
-        userService.saveEntry(user);
-        journalEntryRepository.deleteById(id);
+
+        try{
+            User user = userService.findByUserName(username);
+            boolean removed = user.getJournalEntries().removeIf(x->x.getId().equals(id));
+
+            if(removed){
+                userService.saveUser(user);
+                journalEntryRepository.deleteById(id);
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.toString());
+            throw new RuntimeException("Exception occured while deleting journal Entry");
+        }
     }
 
 }
