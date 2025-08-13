@@ -17,11 +17,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAll(){
-        return new ResponseEntity<>(userService.getAll(),HttpStatus.OK);
-    }
-
     @PutMapping
     public ResponseEntity<?> update(@RequestBody User user){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
