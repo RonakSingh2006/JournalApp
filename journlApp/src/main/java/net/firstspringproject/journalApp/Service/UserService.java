@@ -1,5 +1,6 @@
 package net.firstspringproject.journalApp.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import net.firstspringproject.journalApp.entity.User;
 import net.firstspringproject.journalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class UserService {
 
     @Autowired
@@ -20,10 +22,17 @@ public class UserService {
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // save entry
-    public void saveNewUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(List.of("USER"));
-        userRepository.save(user);
+    public boolean saveNewUser(User user){
+        try{
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(List.of("USER"));
+            userRepository.save(user);
+            return true;
+        }
+        catch (Exception e){
+            log.error("User already Present",e);
+            return false;
+        }
     }
 
     public void saveUser(User user){

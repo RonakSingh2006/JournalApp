@@ -22,7 +22,6 @@ public class JournalEntryService {
     @Autowired
     UserService userService;
 
-
     // save entry
     @Transactional
     public void saveEntry(JournalEntry journalEntry, String username){
