@@ -38,8 +38,7 @@ public class JournalEntryService {
             userService.saveUser(user);
         }
         catch (Exception e){
-            System.out.println(e.toString());
-            throw new RuntimeException("Exception occured white saving journal Entry");
+            log.error(e.toString(),"While saving Journal Entry");
         }
     }
 
@@ -70,7 +69,7 @@ public class JournalEntryService {
             }
         }
         catch (Exception e){
-            log.error(e.toString());
+            log.error(e.toString(),"While Deleting Journal Entry");
         }
 
         return removed;
