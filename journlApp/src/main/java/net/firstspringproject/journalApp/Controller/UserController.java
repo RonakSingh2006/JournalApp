@@ -1,6 +1,10 @@
 package net.firstspringproject.journalApp.Controller;
 
+import net.firstspringproject.journalApp.Service.QuotesService;
 import net.firstspringproject.journalApp.Service.UserService;
+import net.firstspringproject.journalApp.Service.WeatherService;
+import net.firstspringproject.journalApp.api.response.QuoteResponse;
+import net.firstspringproject.journalApp.api.response.WeatherResponse;
 import net.firstspringproject.journalApp.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +20,12 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    WeatherService weatherService;
+
+    @Autowired
+    QuotesService quotesService;
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody User user){
@@ -45,5 +55,24 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping
+    public ResponseEntity<?> greeting(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        WeatherResponse weatherResponse = weatherService.getWeather("MUMBAI");
+        String greeting = "";
+        if(weatherResponse != null){
+            greeting = "\nWeather Feels Like " + weatherResponse.getCurrent().getFeelslike();
+        }
+
+        QuoteResponse quoteResponse = quotesService.getQuote();
+        String quote = "";
+        if(quoteResponse != null){
+            quote = "\nTodays Quote : "+quoteResponse.getQuote();
+        }
+        return new ResponseEntity<>("Hi "+authentication.getName() + greeting + quote, HttpStatus.OK);
+    }
+
 
 }
