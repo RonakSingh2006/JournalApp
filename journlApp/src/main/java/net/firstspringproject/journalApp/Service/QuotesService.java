@@ -7,11 +7,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.header.Header;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Component
+@Service
 public class QuotesService {
     private  static final String apiKey = "imJ0Vd51NRccrlO6kK4p6Q==w0MUnUEAm6Ed9enG";
 
