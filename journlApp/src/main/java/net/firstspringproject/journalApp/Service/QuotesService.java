@@ -3,6 +3,7 @@ package net.firstspringproject.journalApp.Service;
 
 import net.firstspringproject.journalApp.api.response.QuoteResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,7 +13,9 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class QuotesService {
-    private  static final String apiKey = "imJ0Vd51NRccrlO6kK4p6Q==w0MUnUEAm6Ed9enG";
+
+    @Value("${quotes.api.key}")
+    private String apiKey;
 
     private static final String API = "https://api.api-ninjas.com/v1/quotes";
 
